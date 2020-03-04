@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
       - run:
-        name: 'Install @angular/cli globally'
+        name: install-global-angular
         command: 'sudo npm install @angular/cli -g'
       - node/with-cache:
           steps:
