@@ -2,7 +2,7 @@ const awsServerlessExpress = require('aws-serverless-express');
 // const logger = require('./logger.js')
 // const database = require('./database/createDatabase.js')({ logger })
 
-const app = require('./app/createExpressApp.js');
+const app = require('./app/createExpressApp.js')();
 
 const server = awsServerlessExpress.createServer(app);
 
