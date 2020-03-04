@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import * as cdk from '@aws-cdk/core';
-import { InfrastructureStack } from '../lib/infrastructure-stack';
+import { CDKStarterStack } from '../lib/infrastructure-stack';
 
 const app = new cdk.App();
-new InfrastructureStack(app, 'InfrastructureStack');
+new CDKStarterStack(app, 'CDKStarterStack');

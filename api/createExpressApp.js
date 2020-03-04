@@ -4,7 +4,6 @@ const bodyParser = require('body-parser')
 const router = require('./routes/createRouter.js')()
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 
-console.log(router);
 module.exports = () => express()
 .use(bodyParser.urlencoded({ extended: true }))
 .use(bodyParser.json())

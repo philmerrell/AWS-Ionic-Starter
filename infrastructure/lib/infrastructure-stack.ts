@@ -3,15 +3,15 @@ import * as subs from '@aws-cdk/aws-sns-subscriptions';
 import * as sqs from '@aws-cdk/aws-sqs';
 import * as cdk from '@aws-cdk/core';
 
-export class InfrastructureStack extends cdk.Stack {
+export class CDKStarterStack extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const queue = new sqs.Queue(this, 'InfrastructureQueue', {
+    const queue = new sqs.Queue(this, 'CDKStarterQueue', {
       visibilityTimeout: cdk.Duration.seconds(300)
     });
 
-    const topic = new sns.Topic(this, 'InfrastructureTopic');
+    const topic = new sns.Topic(this, 'CDKStarterTopic');
 
     topic.addSubscription(new subs.SqsSubscription(queue));
   }
