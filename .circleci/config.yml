@@ -11,8 +11,8 @@ jobs:
       - node/with-cache:
           steps:
             - run:
-              name: 'Set env'
-              command: echo 'export NG_CLI_ANALYTICS=ci' >> $BASH_ENV
+                name: 'Set env'
+                command: echo 'export NG_CLI_ANALYTICS=ci' >> $BASH_ENV
             - run: sudo npm install @angular/cli -g
             - run: npm install
             - run: ng test --configuration=ci
