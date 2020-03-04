@@ -10,9 +10,7 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
-            - run:
-              name: install-global-angular
-              command: 'sudo npm install @angular/cli -g'
+            - run: sudo npm install @angular/cli -g
             - run: npm install
             - run: ng test --configuration=ci
 workflows:
