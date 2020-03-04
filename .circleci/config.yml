@@ -3,19 +3,19 @@ orbs:
   node: circleci/node@1.1.6
 jobs:
   build-and-test-client:
+    working_directory: ~/client
     executor:
       name: node/default
-    working_directory: ~/client
     steps:
       - checkout
-      - run:
-        name: install-global-angular
-        command: 'sudo npm install @angular/cli -g'
       - node/with-cache:
           steps:
+            - run:
+              name: install-global-angular
+              command: 'sudo npm install @angular/cli -g'
             - run: npm install
             - run: ng test --configuration=ci
 workflows:
-    build-and-test:
+    build-and-test-client:
       jobs:
         - build-and-test-client
