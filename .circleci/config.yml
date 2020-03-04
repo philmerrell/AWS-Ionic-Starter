@@ -3,7 +3,6 @@ orbs:
   node: circleci/node@1.1.6
 jobs:
   build-and-test-client:
-    working_directory: ~/client
     executor:
       name: node/default
     steps:
@@ -11,8 +10,8 @@ jobs:
       - node/with-cache:
           steps:
             - run: sudo npm install -g @angular/cli > /dev/null
-            - run: npm install
-            - run: ng test --configuration=ci
+            - run: cd client && npm install
+            - run: cd client && ng test --configuration=ci
 workflows:
     build-and-test-client:
       jobs:
