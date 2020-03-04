@@ -1,10 +1,8 @@
 version: 2.1
-orbs:
-  node: circleci/node@1.1.6
 jobs:
   build-and-test-client:
-    executor:
-      name: node/default
+    docker: 
+      - image: circleci/node:12.16.1-node-browsers
     steps:
       - checkout
       - node/with-cache:
