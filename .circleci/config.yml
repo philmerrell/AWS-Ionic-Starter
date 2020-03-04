@@ -10,4 +10,4 @@ jobs:
       - run: cd client && ng test --configuration=ci
       - run: cd client && ng build --prod
       - store_artifacts:
-          path: /client/www
+          path: client/www
