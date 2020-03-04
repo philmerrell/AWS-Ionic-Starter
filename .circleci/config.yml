@@ -5,11 +5,9 @@ jobs:
       - image: circleci/node:12.16.1-node-browsers
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: sudo npm install -g @angular/cli > /dev/null
-            - run: cd client && npm install
-            - run: cd client && ng test --configuration=ci
+      - run: sudo npm install -g @angular/cli > /dev/null
+      - run: cd client && npm install
+      - run: cd client && ng test --configuration=ci
 workflows:
     build-and-test-client:
       jobs:
