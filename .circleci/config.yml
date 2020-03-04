@@ -8,3 +8,6 @@ jobs:
       - run: sudo npm install -g @angular/cli > /dev/null
       - run: cd client && npm install
       - run: cd client && ng test --configuration=ci
+      - run: cd client && ng build --prod
+      - store_artifacts:
+          path: /client/www
