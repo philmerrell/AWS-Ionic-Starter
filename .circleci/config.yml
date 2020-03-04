@@ -9,5 +9,6 @@ jobs:
       - run: cd client && npm install
       - run: cd client && ng test --configuration=ci
       - run: cd client && ng build --prod
+      - run: cd client && zip -r client.zip www
       - store_artifacts:
-          path: client/www
+          path: client/client.zip
