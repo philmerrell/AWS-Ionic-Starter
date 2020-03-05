@@ -13,6 +13,9 @@ interface EnvProps extends cdk.StackProps {
 export class AwsIonicStarterClientStack extends cdk.Stack {
     constructor(scope: cdk.Construct, id: string, props: EnvProps) {
         super(scope, id, props);
+
+        const domain = props.domainName;
+        const sslCertArn = props.certArn;
     
         // this tag gets applied to all resources declared in this construct
         this.node.applyAspect(new cdk.Tag('Stack', 'AWS-Ionic-Starter-Client'));
@@ -21,9 +24,6 @@ export class AwsIonicStarterClientStack extends cdk.Stack {
         const zone = route53.HostedZone.fromLookup(this, 'GetHostedZone', {
           domainName: 'philmerrell.com',
         });
-    
-        // TODO: pass in as a prop?
-        const domain = props.domainName;
     
         // creates the site link as a output after the cf template runs
         new cdk.CfnOutput(this, 'Site', {
@@ -43,9 +43,6 @@ export class AwsIonicStarterClientStack extends cdk.Stack {
               removalPolicy: cdk.RemovalPolicy.DESTROY, // NOT recommended for production code
           });
           new cdk.CfnOutput(this, 'Bucket', { value: siteBucket.bucketName });
-    
-          // Pass in as prop
-          const sslCertArn = props.certArn;
     
           // CloudFront distribution that provides HTTPS
           const distribution = new cloudfront.CloudFrontWebDistribution(this, 'SiteDistribution', {

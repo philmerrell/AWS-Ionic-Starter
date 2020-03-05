@@ -53,7 +53,7 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
             allowedOAuthFlowsUserPoolClient: true,
             supportedIdentityProviders: ['COGNITO'],
             explicitAuthFlows: ['ALLOW_REFRESH_TOKEN_AUTH', 'ALLOW_USER_SRP_AUTH', 'ALLOW_USER_PASSWORD_AUTH'],
-            callbackUrLs: ['https://starter.philmerrell.com/callback']
+            callbackUrLs: ['https://starter.philmerrell.com/callback', 'http://localhost:8100/callback']
         });
 
         const userPoolClientId = userPoolClient.ref;
