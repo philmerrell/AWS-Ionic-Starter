@@ -21,4 +21,3 @@ jobs:
             export AWS_ACCESS_KEY_ID=$id
       - run: cd infrastructure && npm install
       - run: cd infrastructure && jest
-      - run: cd infrastructure && cdk deploy
