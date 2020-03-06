@@ -10,9 +10,15 @@ jobs:
       - run: cd client && npm install
       - run: cd client && ng test --configuration=ci
       - store_test_results:
-          path: client/client-test-results/**/*.xml
+          path: client/client-test-results
       - run: cd client && ng build --prod
       - run: sudo npm install -g jest
+      - run: 
+          name: 'set aws environment variables'
+          command: |
+            export AWS_DEFAULT_REGION=us-west-2
+            export AWS_SECRET_ACCESS_KEY=$key
+            export AWS_ACCESS_KEY_ID=$id
       - run: cd infrastructure && npm install
       - run: cd infrastructure && jest
       - run: cd infrastructure && cdk deploy
