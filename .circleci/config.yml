@@ -12,6 +12,7 @@ jobs:
       - store_test_results:
           path: client/client-test-results/**/*.xml
       - run: cd client && ng build --prod
+      - run: sudo npm install -g jest
       - run: cd infrastructure && npm install
       - run: cd infrastructure && jest
       - run: cd infrastructure && cdk deploy
