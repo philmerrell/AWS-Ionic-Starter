@@ -25,6 +25,8 @@ new AwsIonicStarterApiStack(app, 'AwsIonicStarterApiStack', {
     },
     stackName: 'AwsIonicStarterApiStack',
     description: 'A stack for hosting the client side assets.',
-    certArn: 'arn:aws:acm:us-east-1:878042393904:certificate/56a74ab7-e2f4-4da2-88ed-d6e832ad0946',
-    cognitoDomain: 'auth.philmerrell.com'
+    certArn: 'arn:aws:acm:us-west-2:878042393904:certificate/7956b112-aa8c-4b84-98ee-e80a52b029b4',
+    cognitoDomain: 'auth-philmerrell',
+    clientDomainName: 'starter.philmerrell.com',
+    apiDomainName: 'starter-api.philmerrell.com'
 });
