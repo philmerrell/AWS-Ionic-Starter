@@ -14,12 +14,18 @@
   </ion-header>
 
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <div *ngIf="isAuthenticated">
+      <strong>Wow, you logged in.</strong>
+      <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    </div>
+    <div *ngIf="!isAuthenticated">
+      <strong>Get started by logging in or creating an account.</strong>
+      <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    </div>
   </div>
   <div id="authButtons" class="ion-padding">
-    <ion-button (click)="login()" color="primary" expand="block">Login</ion-button>
-    <ion-button (click)="signUp()" color="primary" expand="block">Sign Up</ion-button>
-    <ion-button (click)="logout()" color="primary" expand="block">Logout</ion-button>
+    <ion-button *ngIf="!isAuthenticated" (click)="login()" color="primary" expand="block">Login</ion-button>
+    <ion-button *ngIf="!isAuthenticated" (click)="signUp()" color="primary" expand="block">Sign Up</ion-button>
+    <ion-button *ngIf="isAuthenticated" (click)="logout()" color="primary" expand="block">Logout</ion-button>
   </div>
 </ion-content>
