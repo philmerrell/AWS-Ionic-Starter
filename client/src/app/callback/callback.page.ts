@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-callback',
