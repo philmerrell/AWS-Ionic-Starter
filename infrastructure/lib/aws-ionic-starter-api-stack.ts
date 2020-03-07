@@ -6,7 +6,7 @@ import * as lambda from '@aws-cdk/aws-lambda';
 import * as certificateManager from '@aws-cdk/aws-certificatemanager';
 import * as apigateway from '@aws-cdk/aws-apigateway';
 import * as cognito from '@aws-cdk/aws-cognito';
-import { VerificationEmailStyle } from '@aws-cdk/aws-cognito';
+import { VerificationEmailStyle, UserPool } from '@aws-cdk/aws-cognito';
 import { ApiStackProps } from '../bin/api-stack-props';
 
 
@@ -58,6 +58,7 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
         });
 
         const userPoolClientId = userPoolClient.ref;
+        const userPoolClientSecret = userPoolClient.attrClientSecret;
         new cdk.CfnOutput(this, 'AppClientId', { value: userPoolClientId });
 
 
@@ -75,6 +76,7 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
             environment: {
                 COGNITO_DOMAIN: props.cognitoDomain,
                 COGNITO_CLIENT_ID: userPoolClientId,
+                COGNITO_CLIENT_SECRET: userPoolClientSecret,
                 COGNITO_BASE_URL: `https://${props.cognitoDomain}.auth.us-west-2.amazoncognito.com`,
                 COGNITO_REDIRECT_URI: `https://${props.clientDomainName}${props.cognitoCallbackRoute}`
             }
