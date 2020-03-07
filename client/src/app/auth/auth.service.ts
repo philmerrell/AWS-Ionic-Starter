@@ -24,6 +24,11 @@ export class AuthService {
     await Browser.open({ url: `${environment.apiBaseUrl}/v1/auth/signup`, windowName: '_SELF' });
   }
 
+  async logout() {
+    await Storage.remove({ key: `${environment.localStoragePrefix}-TOKENS`});
+    await Browser.open({ url: `${environment.apiBaseUrl}/v1/auth/logout`, windowName: '_SELF' });
+  }
+
   getTokensFromCognito(code: string) {
     const postObj = { code };
     return this.http.post(`${environment.apiBaseUrl}/v1/auth/token`, postObj);

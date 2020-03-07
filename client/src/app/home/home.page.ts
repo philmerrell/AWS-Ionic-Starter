@@ -14,6 +14,10 @@ export class HomePage {
     this.authService.login();
   }
 
+  logout() {
+    this.authService.logout();
+  }
+
   signUp() {
     this.authService.signUp();
   }

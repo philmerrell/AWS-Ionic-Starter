@@ -53,6 +53,7 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
       refreshTokenValidity: 365,
       allowedOAuthFlowsUserPoolClient: true,
       supportedIdentityProviders: ['COGNITO'],
+      logoutUrLs: [`https://${props.clientDomainName}${props.cognitoLogoutRoute}`, `http://localhost:8100${props.cognitoLogoutRoute}`],
       explicitAuthFlows: ['ALLOW_REFRESH_TOKEN_AUTH', 'ALLOW_USER_SRP_AUTH', 'ALLOW_USER_PASSWORD_AUTH'],
       callbackUrLs: [`https://${props.clientDomainName}${props.cognitoCallbackRoute}`, `http://localhost:8100${props.cognitoCallbackRoute}`]
     });
@@ -78,6 +79,7 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
         COGNITO_DOMAIN: props.cognitoDomain,
         COGNITO_CLIENT_ID: userPoolClientId,
         COGNITO_CLIENT_SECRET: userPoolClientSecret,
+        COGNITO_LOGOUT_URI: `https://${props.clientDomainName}${props.cognitoLogoutRoute}`,
         COGNITO_BASE_URL: `https://${props.cognitoDomain}.auth.us-west-2.amazoncognito.com`,
         COGNITO_REDIRECT_URI: `https://${props.clientDomainName}${props.cognitoCallbackRoute}`
       }
