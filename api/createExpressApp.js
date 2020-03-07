@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 // const expressWinston = require('express-winston')
 const router = require('./routes/createRouter.js')()
+const database = require('./database/createDatabase.js')()
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 
 module.exports = () => express()
@@ -10,7 +11,7 @@ module.exports = () => express()
 .use((req, res, next) => {
     req.base = `${req.protocol}://${req.get('host')}`
     // req.logger = logger
-    // req.db = database
+    req.db = database
     return next()
 })
 .use(awsServerlessExpressMiddleware.eventContext())

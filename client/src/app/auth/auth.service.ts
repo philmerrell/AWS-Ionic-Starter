@@ -13,10 +13,10 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   async login() {
-    await Browser.open({ url: environment.cognito.loginUrl, windowName: '_SELF' });
+    await Browser.open({ url: `${environment.apiBaseUrl}/v1/auth/login`, windowName: '_SELF' });
   }
 
   async signUp() {
-    await Browser.open({ url: environment.cognito.signUpUrl, windowName: '_SELF' });
+    // await Browser.open({ url: environment.cognito.signUpUrl, windowName: '_SELF' });
   }
 }

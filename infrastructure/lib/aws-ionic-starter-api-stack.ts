@@ -7,16 +7,11 @@ import * as certificateManager from '@aws-cdk/aws-certificatemanager';
 import * as apigateway from '@aws-cdk/aws-apigateway';
 import * as cognito from '@aws-cdk/aws-cognito';
 import { VerificationEmailStyle } from '@aws-cdk/aws-cognito';
+import { ApiStackProps } from '../bin/api-stack-props';
 
-interface EnvProps extends cdk.StackProps {
-    certArn: string;
-    cognitoDomain: string;
-    clientDomainName: string;
-    apiDomainName: string;
-}
 
 export class AwsIonicStarterApiStack extends cdk.Stack {
-    constructor(scope: cdk.Construct, id: string, props: EnvProps) {
+    constructor(scope: cdk.Construct, id: string, props: ApiStackProps) {
         super(scope, id, props);
 
         // this tag gets applied to all resources declared in this construct
@@ -59,7 +54,7 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
             allowedOAuthFlowsUserPoolClient: true,
             supportedIdentityProviders: ['COGNITO'],
             explicitAuthFlows: ['ALLOW_REFRESH_TOKEN_AUTH', 'ALLOW_USER_SRP_AUTH', 'ALLOW_USER_PASSWORD_AUTH'],
-            callbackUrLs: ['https://starter.philmerrell.com/callback', 'http://localhost:8100/callback']
+            callbackUrLs: [`https://${props.clientDomainName}${props.cognitoCallbackRoute}`, `http://localhost:8100${props.cognitoCallbackRoute}`]
         });
 
         const userPoolClientId = userPoolClient.ref;
@@ -78,8 +73,10 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
             runtime: lambda.Runtime.NODEJS_12_X,
             timeout: cdk.Duration.seconds(10),
             environment: {
-                userPoolClientId,
-                cognitoBaseUrl: `https://${props.cognitoDomain}.auth.us-west-2.amazoncognito.com`
+                COGNITO_DOMAIN: props.cognitoDomain,
+                COGNITO_CLIENT_ID: userPoolClientId,
+                COGNITO_BASE_URL: `https://${props.cognitoDomain}.auth.us-west-2.amazoncognito.com`,
+                COGNITO_REDIRECT_URI: `https://${props.clientDomainName}${props.cognitoCallbackRoute}`
             }
         });
 
@@ -94,7 +91,7 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
 
         const sslCert = certificateManager.Certificate.fromCertificateArn(this, 'SslCertArn', props.certArn);
         const zone = route53.HostedZone.fromLookup(this, 'GetHostedZone', {
-            domainName: 'philmerrell.com',
+            domainName: props.route53ZoneDomainName,
         });
 
         const api = new apigateway.LambdaRestApi(this, 'AwsStarterApiGateway', {

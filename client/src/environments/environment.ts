@@ -4,17 +4,7 @@
 
 export const environment = {
   production: false,
-  cognito: {
-    clientId: '7re02kn8g5h77283sja2an48mu',
-    baseUrl: 'https://auth-philmerrell.auth.us-west-2.amazoncognito.com',
-    callbackUrl: 'http%3A%2F%2Flocalhost%3A8100%2Fcallback',
-    get loginUrl() {
-      return `${this.baseUrl}/login?response_type=code&client_id=${this.clientId}&redirect_uri=${this.callbackUrl}`
-    },
-    get signUpUrl() {
-      return `${this.baseUrl}/signup?response_type=code&client_id=${this.clientId}&redirect_uri=${this.callbackUrl}`
-    }
-  }
+  apiBaseUrl: 'http://localhost:3000/api'
 };
 
 /*
