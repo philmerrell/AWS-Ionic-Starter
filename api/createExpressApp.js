@@ -22,8 +22,6 @@ module.exports = () => express()
     res.header("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
     res.header("X-Frame-Options", "SAMEORIGIN")
     res.header("X-Content-Type-Options", "nosniff")
-    res.removeHeader("X-Powered-By")
-
     next()
 })
 .use(express.static('./public'))
