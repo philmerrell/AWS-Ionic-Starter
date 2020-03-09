@@ -19,7 +19,7 @@ export const apiStackProps = {
   },
   stackName: 'AwsIonicStarterApiStack',
   description: 'A stack for hosting the client side assets.',
-  certArn: 'arn:aws:acm:us-west-2:878042393904:certificate/7956b112-aa8c-4b84-98ee-e80a52b029b4',
+  certArn: 'arn:aws:acm:us-west-2:878042393904:certificate/3c39f849-54ea-43ae-97aa-51306906720a',
   clientDomainName: 'starter.philmerrell.com',
   cognitoDomain: 'auth-starter',
   cognitoCallbackRoute: '/callback',
