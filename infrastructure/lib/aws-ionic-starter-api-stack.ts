@@ -6,7 +6,7 @@ import * as lambda from '@aws-cdk/aws-lambda';
 import * as certificateManager from '@aws-cdk/aws-certificatemanager';
 import * as apigateway from '@aws-cdk/aws-apigateway';
 import * as cognito from '@aws-cdk/aws-cognito';
-import { VerificationEmailStyle, UserPool } from '@aws-cdk/aws-cognito';
+import { VerificationEmailStyle, UserPool, CfnUserPoolUser, CfnUserPool } from '@aws-cdk/aws-cognito';
 import { ApiStackProps } from '../bin/api-stack-props';
 
 
@@ -25,42 +25,75 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
      * @returns - User Pool application client id that is passed as an environment variable to the lambda node api
      */
 
-    const userPool = new cognito.UserPool(this, 'ApiUserPool', {
-      userPoolName: 'aws-starter-userpool',
-      selfSignUpEnabled: true,
-      userVerification: {
-        emailSubject: 'Verify your email for our awesome app!',
-        emailBody: 'Hello {username}, Thanks for signing up to our awesome app! Your verification code is {####}',
-        emailStyle: VerificationEmailStyle.CODE,
-      },
-      signInAliases: {
-        email: true
-      },
-      autoVerify: { email: true }
-    });
+    // const userPool = new cognito.UserPool(this, 'ApiUserPool', {
+    //   userPoolName: 'aws-starter-userpool',
+    //   selfSignUpEnabled: true,
+    //   userVerification: {
+    //     emailSubject: 'Verify your email for our awesome app!',
+    //     emailBody: 'Hello {username}, Thanks for signing up to our awesome app! Your verification code is {####}',
+    //     emailStyle: VerificationEmailStyle.CODE,
 
-    new cognito.CfnUserPoolDomain(this, 'UserPoolDomain', {
-      domain: props.cognitoDomain,
-      userPoolId: userPool.userPoolId
-    });
+    //   },
+    //   signInAliases: {
+    //     email: true
+    //   },
+    //   autoVerify: { email: true },
+      
+    // });
 
-    const userPoolClient = new cognito.CfnUserPoolClient(this, 'UserPoolClient', {
-      userPoolId: userPool.userPoolId,
-      generateSecret: true,
-      allowedOAuthFlows: ['code'],
-      allowedOAuthScopes: ['email', 'openid', 'profile'],
-      clientName: 'aws-starter-client',
-      refreshTokenValidity: 365,
-      allowedOAuthFlowsUserPoolClient: true,
-      supportedIdentityProviders: ['COGNITO'],
-      logoutUrLs: [`https://${props.clientDomainName}${props.cognitoLogoutRoute}`, `http://localhost:8100${props.cognitoLogoutRoute}`],
-      explicitAuthFlows: ['ALLOW_REFRESH_TOKEN_AUTH', 'ALLOW_USER_SRP_AUTH', 'ALLOW_USER_PASSWORD_AUTH'],
-      callbackUrLs: [`https://${props.clientDomainName}${props.cognitoCallbackRoute}`, `http://localhost:8100${props.cognitoCallbackRoute}`]
-    });
+    // const userPool = new CfnUserPool(this, 'UserPoolSchema', {
+    //   userPoolName: 'aws-starter-userpool',
+    //   autoVerifiedAttributes: ['email'],
+    //   emailVerificationMessage: 'Hello {given_name}, Thanks for signing up to our awesome app! Your verification code is {####}',
+    //   emailVerificationSubject: 'Verify your email for our awesome app!',
+    //   schema: [
+    //     {
+    //       name: 'email',
+    //       attributeDataType: 'String',
+    //       required: true,
+    //       mutable: true
+    //     },
+    //     {
+    //       name: 'given_name',
+    //       attributeDataType: 'String',
+    //       required: true,
+    //       mutable: true
+    //     },
+    //     {
+    //       name: 'family_name',
+    //       attributeDataType: 'String',
+    //       required: true,
+    //       mutable: true
+    //     } 
+    //   ]
+    // });
 
-    const userPoolClientId = userPoolClient.ref;
-    const userPoolClientSecret = userPoolClient.attrClientSecret;
-    new cdk.CfnOutput(this, 'AppClientId', { value: userPoolClientId });
+    // new cdk.CfnOutput(this, 'UserPoolId', { value: userPool.ref });
+
+
+    // new cognito.CfnUserPoolDomain(this, 'UserPoolDomain', {
+    //   domain: props.cognitoDomain,
+    //   userPoolId: userPool.ref
+    // });
+
+    // const userPoolClient = new cognito.CfnUserPoolClient(this, 'UserPoolClient', {
+    //   userPoolId: userPool.ref,
+    //   generateSecret: true,
+    //   allowedOAuthFlows: ['code'],
+    //   allowedOAuthScopes: ['email', 'openid', 'profile'],
+    //   clientName: 'aws-starter-client',
+    //   refreshTokenValidity: 365,
+    //   allowedOAuthFlowsUserPoolClient: true,
+    //   supportedIdentityProviders: ['COGNITO'],
+    //   logoutUrLs: [`https://${props.clientDomainName}${props.cognitoLogoutRoute}`, `http://localhost:8100${props.cognitoLogoutRoute}`],
+    //   explicitAuthFlows: ['ALLOW_REFRESH_TOKEN_AUTH', 'ALLOW_USER_SRP_AUTH', 'ALLOW_USER_PASSWORD_AUTH'],
+    //   callbackUrLs: [`https://${props.clientDomainName}${props.cognitoCallbackRoute}`, `http://localhost:8100${props.cognitoCallbackRoute}`]
+    // });
+
+    // const userPoolClientId = userPoolClient.ref;
+    // const userPoolClientSecret = userPoolClient.attrClientSecret;
+    // new cdk.CfnOutput(this, 'AppClientId', { value: userPoolClientId });
+    // new cdk.CfnOutput(this, 'AppClientSecret', { value: userPoolClientSecret });
 
 
 
@@ -77,8 +110,8 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
       environment: {
         CLIENT_DOMAIN_NAME: `https://${props.clientDomainName}`,
         COGNITO_DOMAIN: props.cognitoDomain,
-        COGNITO_CLIENT_ID: userPoolClientId,
-        COGNITO_CLIENT_SECRET: userPoolClientSecret,
+        COGNITO_CLIENT_ID: '2vqrk0fshi0u41aolc7ve9jvp8',
+        COGNITO_CLIENT_SECRET: 'Paste in Lambda',
         COGNITO_LOGOUT_URI: `https://${props.clientDomainName}${props.cognitoLogoutRoute}`,
         COGNITO_BASE_URL: `https://${props.cognitoDomain}.auth.us-west-2.amazoncognito.com`,
         COGNITO_REDIRECT_URI: `https://${props.clientDomainName}${props.cognitoCallbackRoute}`

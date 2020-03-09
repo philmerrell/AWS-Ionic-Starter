@@ -16,6 +16,7 @@
     "express": "^4.17.1",
     "express-winston": "^4.0.3",
     "glob": "^7.1.6",
+    "helmet": "^3.21.3",
     "querystring": "^0.2.0",
     "winston": "^3.2.1"
   },

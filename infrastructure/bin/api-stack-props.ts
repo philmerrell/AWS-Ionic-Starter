@@ -21,7 +21,7 @@ export const apiStackProps = {
   description: 'A stack for hosting the client side assets.',
   certArn: 'arn:aws:acm:us-west-2:878042393904:certificate/7956b112-aa8c-4b84-98ee-e80a52b029b4',
   clientDomainName: 'starter.philmerrell.com',
-  cognitoDomain: 'auth-philmerrell',
+  cognitoDomain: 'auth-starter',
   cognitoCallbackRoute: '/callback',
   cognitoLogoutRoute: '/logout',
   apiDomainName: 'starter-api.philmerrell.com',
