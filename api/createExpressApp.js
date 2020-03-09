@@ -3,7 +3,6 @@ const bodyParser = require('body-parser')
 // const expressWinston = require('express-winston')
 const router = require('./routes/createRouter.js')()
 const database = require('./database/createDatabase.js')()
-const helmet = require('helmet');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 
 module.exports = () => express()
@@ -26,7 +25,6 @@ module.exports = () => express()
 })
 .use(express.static('./public'))
 .use('/api', router)
-.use(helmet())
 .use((error, req, res, next) => {
     console.log('Error: ', error)
     res.status(error.status || 500).json({ error })
