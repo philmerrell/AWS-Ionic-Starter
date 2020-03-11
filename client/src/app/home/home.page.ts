@@ -31,8 +31,9 @@ export class HomePage implements OnInit {
 
   async getUser() {
     const token = await this.authService.getAccessToken();
-    // console.log(token);
-    this.user = await this.authService.decodeAccessToken(token);
+    if (token) {
+      this.user = await this.authService.decodeAccessToken(token);
+    }
   }
 
 
