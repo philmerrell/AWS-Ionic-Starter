@@ -13,7 +13,7 @@ const { Browser, Storage } = Plugins;
 export class AuthService {
   jwtHelperService = new JwtHelperService();
   tokensSubject: BehaviorSubject<any> = new BehaviorSubject({});
-
+  
   constructor(private http: HttpClient) { }
 
   async login() {
@@ -47,12 +47,17 @@ export class AuthService {
   async isAuthenticated() {
     const token = await this.getAccessToken();
     if (token) {
-      const isExpired = this.jwtHelperService.isTokenExpired(token.id_token);
+      const isExpired = this.jwtHelperService.isTokenExpired(token.access_token);
       return !isExpired;
     } else {
       return false;
     }
-
   }
+
+  async decodeAccessToken(token) {
+    return await this.jwtHelperService.decodeToken(token.access_token);
+  }
+
+  
 
 }

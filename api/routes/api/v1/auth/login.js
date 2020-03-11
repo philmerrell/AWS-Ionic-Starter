@@ -6,7 +6,7 @@ module.exports = Router({mergeParams: true})
 .get('/v1/auth/login', async (req, res, next) => {
     try {
         const urlEncodedRedirect = encodeURIComponent(cognito_redirect_uri);
-        const loginInQueryParams = `/login?response_type=code&response_type=code&client_id=${cognito_client_id}&redirect_uri=${urlEncodedRedirect}`;
+        const loginInQueryParams = `/login?response_type=code&client_id=${cognito_client_id}&redirect_uri=${urlEncodedRedirect}`;
         res.status(301).redirect(cognito_base_url + loginInQueryParams);
     } catch (error) {
         next(error)

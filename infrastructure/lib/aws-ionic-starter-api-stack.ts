@@ -8,6 +8,7 @@ import * as apigateway from '@aws-cdk/aws-apigateway';
 import * as cognito from '@aws-cdk/aws-cognito';
 import { VerificationEmailStyle, UserPool, CfnUserPoolUser, CfnUserPool } from '@aws-cdk/aws-cognito';
 import { ApiStackProps } from '../bin/api-stack-props';
+import { EndpointType } from '@aws-cdk/aws-apigateway';
 
 
 export class AwsIonicStarterApiStack extends cdk.Stack {
@@ -110,8 +111,8 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
       environment: {
         CLIENT_DOMAIN_NAME: `https://${props.clientDomainName}`,
         COGNITO_DOMAIN: props.cognitoDomain,
-        COGNITO_CLIENT_ID: '2vqrk0fshi0u41aolc7ve9jvp8',
-        COGNITO_CLIENT_SECRET: 'Paste in Lambda',
+        COGNITO_CLIENT_ID: props.cognitoClientId,
+        COGNITO_CLIENT_SECRET: 'Paste value in lambda console.',
         COGNITO_LOGOUT_URI: `https://${props.clientDomainName}${props.cognitoLogoutRoute}`,
         COGNITO_BASE_URL: `https://${props.cognitoDomain}.auth.us-west-2.amazoncognito.com`,
         COGNITO_REDIRECT_URI: `https://${props.clientDomainName}${props.cognitoCallbackRoute}`
@@ -149,8 +150,12 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
           "DELETE"
         ],
       },
+      endpointConfiguration: {
+        types: [ EndpointType.EDGE ]
+      },
       domainName: {
         domainName: props.apiDomainName,
+        endpointType: EndpointType.EDGE,
         certificate: sslCert
       }
     });
