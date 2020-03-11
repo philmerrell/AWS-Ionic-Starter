@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -11,25 +11,25 @@ export class CallbackPage implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {}
 
   async ionViewDidEnter() {
-    const code = this.getCodeFromUrl(this.router.url);
-    try {
-      const response = await this.authService.getTokensFromCognito(code).toPromise();
-      await this.authService.saveTokensToLocalStorage(response);
-      this.router.navigateByUrl('/', { replaceUrl: true });
-    } catch (error) {
-      console.log(error);
-      alert('Uh oh.');
-    }
-  }
+    this.route.queryParams.subscribe( async (params) => {
+      const code = params['code'];
+      const state = params['state'];
 
-  private getCodeFromUrl(url: string) {
-    const splitUrl = url.split('?code=');
-    return splitUrl[1];
+      try {
+        const response = await this.authService.getTokensFromCognito({code, state}).toPromise();
+        await this.authService.saveTokensToLocalStorage(response);
+        this.router.navigateByUrl('/', { replaceUrl: true });
+      } catch (error) {
+        console.log(error);
+        alert('Uh oh.');
+      }
+    });
   }
 
 }

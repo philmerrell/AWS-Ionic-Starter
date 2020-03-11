@@ -29,8 +29,7 @@ export class AuthService {
     await Browser.open({ url: `${environment.apiBaseUrl}/v1/auth/logout`, windowName: '_SELF' });
   }
 
-  getTokensFromCognito(code: string) {
-    const postObj = { code };
+  getTokensFromCognito(postObj: { code: string; state: string;}) {
     return this.http.post(`${environment.apiBaseUrl}/v1/auth/token`, postObj);
   }
 
@@ -55,7 +54,7 @@ export class AuthService {
   }
 
   async decodeAccessToken(token) {
-    return await this.jwtHelperService.decodeToken(token.access_token);
+    return await this.jwtHelperService.decodeToken(token.id_token);
   }
 
   
