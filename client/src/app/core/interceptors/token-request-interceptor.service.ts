@@ -10,13 +10,17 @@ import { environment } from 'src/environments/environment';
 export class TokenRequestInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url.includes(`${environment.apiBaseUrl}/v1/auth/token`)) {
-      req = req.clone({
-        withCredentials: true
-      });
-      return next.handle(req);
-    } else {
-      return next.handle(req);
-    }
+    req = req.clone({
+      withCredentials: true
+    });
+    return next.handle(req);
+    // if (req.url.includes(`${environment.apiBaseUrl}/v1/auth/token`)) {
+    //   req = req.clone({
+    //     withCredentials: true
+    //   });
+    //   return next.handle(req);
+    // } else {
+    //   return next.handle(req);
+    // }
   }
 }
