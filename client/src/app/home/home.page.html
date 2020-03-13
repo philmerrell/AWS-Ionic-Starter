@@ -26,6 +26,10 @@
   <div id="authButtons" class="ion-padding">
     <ion-button *ngIf="!isAuthenticated" (click)="login()" color="primary" expand="block">Login</ion-button>
     <ion-button *ngIf="!isAuthenticated" (click)="signUp()" color="primary" expand="block">Sign Up</ion-button>
+    <ion-button (click)="testApi()" color="primary" expand="block">Test Api</ion-button>
     <ion-button *ngIf="isAuthenticated" (click)="logout()" color="primary" expand="block">Logout</ion-button>
   </div>
+  <pre>
+    {{ testResult | json }}
+  </pre>
 </ion-content>

@@ -17,7 +17,7 @@ module.exports = () => express()
   })
   .use(awsServerlessExpressMiddleware.eventContext())
   .use(function (req, res, next) {
-    var allowedOrigins = [ client_domain_name ];
+    var allowedOrigins = [ 'http://localhost:8100', 'https://starter.philmerrell.com' ];
     var origin = req.headers.origin;
     if (allowedOrigins.indexOf(origin) > -1) {
       res.setHeader('Access-Control-Allow-Origin', origin);

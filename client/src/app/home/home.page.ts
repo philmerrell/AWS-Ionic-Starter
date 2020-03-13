@@ -9,6 +9,7 @@ import { AuthService } from '../auth/auth.service';
 export class HomePage implements OnInit {
   isAuthenticated = false;
   user;
+  testResult;
 
   constructor(private authService: AuthService) {}
 
@@ -34,6 +35,10 @@ export class HomePage implements OnInit {
     if (token) {
       this.user = await this.authService.decodeAccessToken(token);
     }
+  }
+
+  async testApi() {
+    this.testResult = await this.authService.testApi().toPromise();
   }
 
 

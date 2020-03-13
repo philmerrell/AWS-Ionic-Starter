@@ -57,6 +57,10 @@ export class AuthService {
     return await this.jwtHelperService.decodeToken(token.id_token);
   }
 
+  testApi() {
+    return this.http.get(`${environment.apiBaseUrl}/v1/test/health`)
+  }
+
   
 
 }
