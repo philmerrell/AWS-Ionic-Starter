@@ -149,6 +149,7 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
           "PUT",
           "DELETE"
         ],
+        allowCredentials: true,
       },
       endpointConfiguration: {
         types: [ EndpointType.EDGE ]

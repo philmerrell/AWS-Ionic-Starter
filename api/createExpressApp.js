@@ -17,13 +17,12 @@ module.exports = () => express()
   })
   .use(awsServerlessExpressMiddleware.eventContext())
   .use(function (req, res, next) {
-    var allowedOrigins = [ 'http://localhost:8100', 'https://starter.philmerrell.com' ];
-    var origin = req.headers.origin;
+    const allowedOrigins = [ 'http://localhost:8100', 'https://starter.philmerrell.com' ];
+    const origin = req.headers.origin;
     if (allowedOrigins.indexOf(origin) > -1) {
-      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.header("Access-Control-Allow-Origin", origin);
     }
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization")
-    res.header('Access-Control-Allow-Credentials', true);
     res.header("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
     res.header("X-Frame-Options", "SAMEORIGIN")
     res.header("X-Content-Type-Options", "nosniff")
