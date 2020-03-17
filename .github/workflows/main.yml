@@ -30,3 +30,4 @@ jobs:
     - name: Build Angular Client
       run: |
         cd client && npm install
+        cd client && ng test --configuration=ci
