@@ -7,7 +7,7 @@ import { AuthService } from '../auth/auth.service';
 describe('HomePage', () => {
   let component: HomePage;
   let fixture: ComponentFixture<HomePage>;
-  const spy = jasmine.createSpyObj('AuthService', ['login', 'signUp', 'isAuthenticated', 'logout', 'getAccessToken']);
+  const spy = jasmine.createSpyObj('AuthService', ['login', 'signUp', 'isAuthenticated', 'logout', 'getAuthTokens']);
 
 
   beforeEach(async(() => {

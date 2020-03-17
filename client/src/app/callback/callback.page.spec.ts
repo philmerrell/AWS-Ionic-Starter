@@ -10,7 +10,7 @@ describe('CallbackPage', () => {
   let fixture: ComponentFixture<CallbackPage>;
   const authServiceSpy = jasmine.createSpyObj('AuthService', ['login', 'signUp', 'isAuthenticated', 'logout', 'getAccessToken', 'saveTokensToLocalStorage', 'getTokensFromCognito']);
   const routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
-  const routeSpy = jasmine.createSpyObj('ActivatedRouter', ['login', 'signUp', 'isAuthenticated', 'logout', 'getAccessToken']);
+  const routeSpy = jasmine.createSpyObj('ActivatedRoute', ['queryParams']);
   
   beforeEach(async(() => {
     TestBed.configureTestingModule({

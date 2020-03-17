@@ -21,6 +21,12 @@ module.exports = function (config) {
       reports: ['html', 'lcovonly', 'text-summary'],
       fixWebpackSourcePaths: true
     },
+    customLaunchers: {
+      ChromeHeadlessCustom: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox', '--disable-gpu']
+      }
+    },
     junitReporter: {
       outputDir: 'client-test-results',
       outputFile: 'results',
