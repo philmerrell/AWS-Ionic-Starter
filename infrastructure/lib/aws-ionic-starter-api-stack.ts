@@ -9,6 +9,7 @@ import * as cognito from '@aws-cdk/aws-cognito';
 import { VerificationEmailStyle, UserPool, CfnUserPoolUser, CfnUserPool } from '@aws-cdk/aws-cognito';
 import { ApiStackProps } from '../bin/api-stack-props';
 import { EndpointType } from '@aws-cdk/aws-apigateway';
+import { Stack } from '@aws-cdk/core';
 
 
 export class AwsIonicStarterApiStack extends cdk.Stack {
@@ -115,7 +116,8 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
         COGNITO_CLIENT_SECRET: 'Paste value in lambda console.',
         COGNITO_LOGOUT_URI: `https://${props.clientDomainName}${props.cognitoLogoutRoute}`,
         COGNITO_BASE_URL: `https://${props.cognitoDomain}.auth.us-west-2.amazoncognito.com`,
-        COGNITO_REDIRECT_URI: `https://${props.clientDomainName}${props.cognitoCallbackRoute}`
+        COGNITO_REDIRECT_URI: `https://${props.clientDomainName}${props.cognitoCallbackRoute}`,
+        COGNITO_USERPOOL_ID: 'us-west-2_RZ7CmVru5'
       }
     });
 

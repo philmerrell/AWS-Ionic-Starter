@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpBackend, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Plugins } from '@capacitor/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -13,8 +13,11 @@ const { Browser, Storage } = Plugins;
 export class AuthService {
   jwtHelperService = new JwtHelperService();
   tokensSubject: BehaviorSubject<any> = new BehaviorSubject({});
+  authClient: HttpClient;
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private handler: HttpBackend) {
+    this.authClient = new HttpClient(handler);
+  }
 
   async login() {
     await Browser.open({ url: `${environment.apiBaseUrl}/v1/auth/login`, windowName: '_SELF' });
@@ -30,21 +33,27 @@ export class AuthService {
   }
 
   getTokensFromCognito(postObj: { code: string; state: string;}) {
-    return this.http.post(`${environment.apiBaseUrl}/v1/auth/token`, postObj);
+
+    return this.authClient.post(`${environment.apiBaseUrl}/v1/auth/token`, postObj, { withCredentials: true });
   }
 
-  async saveTokensToLocalStorage(tokens, isRefreshing = false): Promise<any> {
-    await Storage.set({ key: `${environment.localStoragePrefix}-TOKENS`, value: JSON.stringify(tokens) });
+  async refreshToken() {
+    const tokens = await this.getAuthTokens();
+    return this.authClient.post(`${environment.apiBaseUrl}/v1/auth/refresh`, { refresh_token: tokens.refresh_token}).toPromise();
+  }
+
+  saveTokensToLocalStorage(tokens) {
     this.tokensSubject.next(tokens);
+    Storage.set({ key: `${environment.localStoragePrefix}-TOKENS`, value: JSON.stringify(tokens) });
   }
 
-  async getAccessToken() {
+  async getAuthTokens() {
     const token = await Storage.get({ key: `${environment.localStoragePrefix}-TOKENS`});
     return JSON.parse(token.value);
   }
 
   async isAuthenticated() {
-    const token = await this.getAccessToken();
+    const token = await this.getAuthTokens();
     if (token) {
       const isExpired = this.jwtHelperService.isTokenExpired(token.access_token);
       return !isExpired;
@@ -53,12 +62,20 @@ export class AuthService {
     }
   }
 
-  async decodeAccessToken(token) {
-    return await this.jwtHelperService.decodeToken(token.id_token);
+  decodeAccessToken(token) {
+    return this.jwtHelperService.decodeToken(token.access_token);
+  }
+
+  decodeIdToken(token) {
+    return this.jwtHelperService.decodeToken(token.id_token);
   }
 
   testApi() {
     return this.http.get(`${environment.apiBaseUrl}/v1/test/health`)
+  }
+
+  getTokenObservable() {
+    return this.tokensSubject.asObservable();
   }
 
   

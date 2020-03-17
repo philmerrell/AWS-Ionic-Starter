@@ -6,12 +6,10 @@ const cookieParser = require('cookie-parser')
 
 module.exports = Router({ mergeParams: true })
   .post('/v1/auth/token', async (req, res, next) => {
-    res.header("Access-Control-Allow-Credentials", "true");
     const code = req.body.code || false;
     const state = req.body.state || false;
 
       cookieParser()(req, res, async () => {
-        // console.log('COOKIES: ', req.cookies.state);
         if (!req.cookies.state) {
           throw new Error('State cookie not set or expired. Maybe you took too long to authorize. Please try again.');
         } else if (req.cookies.state !== state) {

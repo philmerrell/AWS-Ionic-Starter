@@ -14,9 +14,9 @@ export class CallbackPage implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute) { }
 
-  ngOnInit() {}
+  // ngOnInit() {}
 
-  async ionViewDidEnter() {
+  ngOnInit() {
     this.route.queryParams.subscribe( async (params) => {
       const code = params['code'];
       const state = params['state'];

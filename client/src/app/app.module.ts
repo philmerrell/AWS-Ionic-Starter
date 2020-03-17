@@ -9,7 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenRequestInterceptorService } from './core/interceptors/token-request-interceptor.service';
+import { HttpTokenInterceptor } from './core/interceptors/http-token-interceptor.service';
 
 
 @NgModule({
@@ -20,7 +20,7 @@ import { TokenRequestInterceptorService } from './core/interceptors/token-reques
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HTTP_INTERCEPTORS, useClass: TokenRequestInterceptorService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
