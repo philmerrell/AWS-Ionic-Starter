@@ -27,7 +27,7 @@ jobs:
       run: echo Hello, world!
 
     # Runs a set of commands using the runners shell
-    - name: Build Angular Client
+    - name: Test Angular Client
       run: |
         cd client && npm install
-        cd client && ng test --configuration=ci
+        ng test --configuration=ci
