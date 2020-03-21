@@ -1,5 +1,5 @@
 export const environment = {
-  apiBaseUrl: 'https://starter-api.philmerrell.com/api',
   production: true,
+  apiBaseUrl: 'https://starter-api.philmerrell.com/api',
   localStoragePrefix: 'production'
 };

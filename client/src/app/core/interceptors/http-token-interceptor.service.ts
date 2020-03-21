@@ -51,7 +51,6 @@ export class HttpTokenInterceptor implements HttpInterceptor {
   }
 
   private addTokenToRequest(request: HttpRequest<any>, tokens: any): HttpRequest<any> {
-    // Otherwise send a request to our servers with a standard Auth header...
     if (request.url.indexOf(`${environment.apiBaseUrl}`) !== -1) {
       return request.clone({ setHeaders: { Authorization: `Bearer ${tokens.access_token}` } });
     } else {

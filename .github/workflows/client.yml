@@ -58,3 +58,6 @@ jobs:
 
     - name: Install Infrastructure Dependencies
       run: cd infrastructure && npm install
+
+    - name: Test Infrastructure
+      run: cd infrastructure && jest
