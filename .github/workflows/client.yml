@@ -50,11 +50,9 @@ jobs:
 
     - name: Set AWS environment variables
       run: |
-          name: 'set aws environment variables'
-          command: |
-            export AWS_DEFAULT_REGION=us-west-2
-            export AWS_SECRET_ACCESS_KEY=KEY
-            export AWS_ACCESS_KEY_ID=ID
+        export AWS_DEFAULT_REGION=us-west-2
+        export AWS_SECRET_ACCESS_KEY=KEY
+        export AWS_ACCESS_KEY_ID=ID
 
     - name: Install Infrastructure Dependencies
       run: cd infrastructure && npm install
