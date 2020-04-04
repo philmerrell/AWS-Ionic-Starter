@@ -8,6 +8,7 @@ export interface ApiStackProps extends cdk.StackProps {
   cognitoClientId: string;
   cognitoDomain: string;
   cognitoLogoutRoute: string;
+  route53ARecordName: string;
   route53ZoneDomainName: string;
   tagKey: string;
   tagValue: string;
@@ -27,6 +28,7 @@ export const apiStackProps = {
   cognitoClientId: '2vqrk0fshi0u41aolc7ve9jvp8',
   cognitoLogoutRoute: '/logout',
   apiDomainName: 'starter-api.philmerrell.com',
+  route53ARecordName: 'starter-api',
   route53ZoneDomainName: 'philmerrell.com',
   tagKey: 'Stack',
   tagValue: 'Aws-Starter-Api-Stack'
