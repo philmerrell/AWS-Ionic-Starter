@@ -116,7 +116,7 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
         COGNITO_CLIENT_SECRET: 'Paste value in lambda console.',
         COGNITO_LOGOUT_URI: `https://${props.clientDomainName}${props.cognitoLogoutRoute}`,
         COGNITO_BASE_URL: `https://${props.cognitoDomain}.auth.us-west-2.amazoncognito.com`,
-        COGNITO_REDIRECT_URI: `https://${props.clientDomainName}${props.cognitoCallbackRoute}`,
+        COGNITO_REDIRECT_URI: `awsIonicStarter://?page=/callback`,
         COGNITO_USERPOOL_ID: 'us-west-2_RZ7CmVru5'
       }
     });
@@ -142,7 +142,8 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
       defaultCorsPreflightOptions: {
         allowOrigins: [
           "http://localhost:8100",
-          `https://${props.clientDomainName}`
+          `https://${props.clientDomainName}`,
+          "awsIonicStarter://"
         ],
         allowMethods: [
           "GET",

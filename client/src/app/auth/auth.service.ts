@@ -20,16 +20,16 @@ export class AuthService {
   }
 
   async login() {
-    await Browser.open({ url: `${environment.apiBaseUrl}/v1/auth/login`, windowName: '_SELF' });
+    await Browser.open({ url: `${environment.apiBaseUrl}/v1/auth/login`});
   }
 
   async signUp() {
-    await Browser.open({ url: `${environment.apiBaseUrl}/v1/auth/signup`, windowName: '_SELF' });
+    await Browser.open({ url: `${environment.apiBaseUrl}/v1/auth/signup`});
   }
 
   async logout() {
     await Storage.remove({ key: `${environment.localStoragePrefix}-TOKENS`});
-    await Browser.open({ url: `${environment.apiBaseUrl}/v1/auth/logout`, windowName: '_SELF' });
+    await Browser.open({ url: `${environment.apiBaseUrl}/v1/auth/logout`});
   }
 
   getTokensFromCognito(postObj: { code: string; state: string;}) {
